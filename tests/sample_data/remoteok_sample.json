@@ -1,0 +1,32 @@
+[
+  {
+    "legal": "RemoteOK API sample (trimmed). First element carries no 'position' and is skipped by the adapter."
+  },
+  {
+    "id": "rok-77001",
+    "slug": "product-analyst-brightpath",
+    "position": "Product Analyst",
+    "company": "BrightPath",
+    "location": "Remote",
+    "url": "https://remoteok.com/remote-jobs/rok-77001",
+    "apply_url": "https://brightpath.example/apply/77001",
+    "date": "2026-07-17T10:00:00+00:00",
+    "tags": ["product", "analytics", "sql"],
+    "salary_min": 55000,
+    "salary_max": 75000,
+    "description": "Analyze funnels, build dashboards, partner with PM."
+  },
+  {
+    "id": "rok-77002",
+    "slug": "backend-engineer-coreapi",
+    "position": "Backend Engineer",
+    "company": "CoreAPI",
+    "location": "Remote (EU)",
+    "url": "https://remoteok.com/remote-jobs/rok-77002",
+    "date": "2026-07-17T12:00:00+00:00",
+    "tags": ["golang", "backend"],
+    "salary_min": 90000,
+    "salary_max": 120000,
+    "description": "Build high-throughput services in Go."
+  }
+]

@@ -1,0 +1,14 @@
+# ── Secrets template ─────────────────────────────────────────────────────
+# Copy this file to `config.local.yaml` and fill in your real values:
+#     cp config.example.yaml config.local.yaml
+# config.local.yaml is gitignored and overrides the empty placeholders in
+# config.yaml at runtime. NEVER commit real secrets.
+
+sources:
+  adzuna:
+    app_id: "YOUR_ADZUNA_APP_ID"      # free at developer.adzuna.com
+    app_key: "YOUR_ADZUNA_APP_KEY"
+
+telegram:
+  token: "YOUR_TELEGRAM_BOT_TOKEN"    # from @BotFather
+  chat_id: "YOUR_TELEGRAM_CHAT_ID"    # find via: python -m src.notify --whoami

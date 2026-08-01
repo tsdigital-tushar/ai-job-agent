@@ -1,0 +1,91 @@
+# ── AI Job-Application Agent — configuration ─────────────────────────────
+# Change filters here, not in code.
+
+resume_path: "TusharSingh_Resume.pdf"   # path to your resume PDF
+profile_out: "data/profile.json"
+db_path:     "data/jobs.db"
+
+# ── What you're looking for ──────────────────────────────────────────────
+pay_floor_lpa: 7            # minimum acceptable pay, in LPA (INR lakhs/year)
+currency: "INR"
+remote_priority: true      # rank remote higher, but do not exclude on-site
+apply_everywhere: true     # no hard location filter (open to all locations)
+
+target_titles:
+  - "Associate Product Manager"
+  - "Product Analyst"
+  - "Business Analyst"
+  - "Business Systems Analyst"
+  - "Functional Consultant"
+  - "SAP Consultant"
+  - "Technology Consulting"
+
+# Seniority guard — titles containing these are skipped (not a YoE filter,
+# a seniority-mismatch filter). The "3-5 years" line inside a JD is ignored
+# as intended; these keywords are about the role's level, not its ask.
+seniority_block:
+  - "senior"
+  - "sr."
+  - "lead"
+  - "principal"
+  - "staff"
+  - "head of"
+  - "director"
+  - "vp"
+  - "vice president"
+  - "manager,"        # people-manager roles, not APM
+
+# Domain guard — obvious wrong-field titles to skip.
+domain_block:
+  - "sales"
+  - "recruiter"
+  - "backend engineer"
+  - "ml engineer"
+  - "devops"
+  - "marketing"
+
+# ── Scoring (Phase 2) ────────────────────────────────────────────────────
+scoring:
+  mode: flag                 # flag = tag & rank (hide nothing) | filter = drop mismatches
+  backend: sentence-transformers   # or "lexical" (no model download, offline)
+  model: all-MiniLM-L6-v2
+  usd_to_inr: 83             # rough rate for pay-floor comparison
+  thresholds:
+    core: 70                 # >= this -> core (apply/recommend). Your cutoff:
+                             # only >=70 roles get recommended & pushed.
+    stretch: 28              # >= this -> stretch (draft), not pushed.
+  penalties:                 # points subtracted from a 0-100 score
+    seniority: 35
+    domain: 40
+    below_floor: 30
+
+# ── Sources ──────────────────────────────────────────────────────────────
+# Phase 1 ships remotive + remoteok. The rest are placeholders for later
+# phases (kept disabled so they're documented but not yet polled).
+sources:
+  remotive:
+    enabled: true
+  remoteok:
+    enabled: true
+  arbeitnow:
+    enabled: false
+  weworkremotely:
+    enabled: false
+  adzuna:
+    enabled: true          # set true AFTER pasting your free keys below
+    app_id: ""             # set in config.local.yaml (free at developer.adzuna.com)
+    app_key: ""            # set in config.local.yaml
+    country: "in"           # India
+    results_per_page: 50    # max 50; queried once per target title
+  greenhouse:
+    enabled: true
+    # Board tokens from a company's careers URL: boards.greenhouse.io/<token>.
+    # No API key needed.
+    companies:
+      - "figma"
+telegram:
+  token: ""                # set in config.local.yaml (from @BotFather)
+  chat_id: ""              # set in config.local.yaml (python -m src.notify --whoami)
+  push_top: 20
+  push_tier: "core"
+  listen_seconds: 120

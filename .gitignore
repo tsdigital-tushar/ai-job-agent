@@ -1,0 +1,21 @@
+# ── secrets — never commit ───────────────────────────────────────────────
+config.local.yaml
+.env
+
+# ── runtime data (db, generated profile, logs) ───────────────────────────
+data/
+*.db
+profile.json
+
+# ── personal documents (résumé, backups) ─────────────────────────────────
+*.pdf
+
+# ── python ───────────────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# ── Claude Code local settings (per-machine) ─────────────────────────────
+.claude/settings.local.json

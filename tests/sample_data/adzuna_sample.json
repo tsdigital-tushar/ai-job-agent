@@ -1,0 +1,41 @@
+{
+  "count": 3,
+  "results": [
+    {
+      "id": "az-500101",
+      "title": "Business Analyst - SAP FICO",
+      "company": { "display_name": "Infowave Consulting" },
+      "location": { "display_name": "Bengaluru, Karnataka", "area": ["India", "Karnataka", "Bengaluru"] },
+      "redirect_url": "https://www.adzuna.in/details/az-500101",
+      "salary_min": 900000,
+      "salary_max": 1400000,
+      "created": "2026-07-18T06:00:00Z",
+      "category": { "label": "IT Jobs" },
+      "description": "Gather requirements across finance modules, write functional specs, run UAT. SAP S/4HANA experience preferred."
+    },
+    {
+      "id": "az-500102",
+      "title": "Associate Product Manager",
+      "company": { "display_name": "Kanto Tech" },
+      "location": { "display_name": "Remote - India", "area": ["India"] },
+      "redirect_url": "https://www.adzuna.in/details/az-500102",
+      "salary_min": 1200000,
+      "salary_max": 1800000,
+      "created": "2026-07-17T09:00:00Z",
+      "category": { "label": "IT Jobs" },
+      "description": "Own the roadmap for onboarding. Work with engineering and design. 2-3 years experience preferred."
+    },
+    {
+      "id": "az-500103",
+      "title": "Field Sales Executive",
+      "company": { "display_name": "QuickReach" },
+      "location": { "display_name": "Pune, Maharashtra", "area": ["India", "Maharashtra", "Pune"] },
+      "redirect_url": "https://www.adzuna.in/details/az-500103",
+      "salary_min": 300000,
+      "salary_max": 450000,
+      "created": "2026-07-16T09:00:00Z",
+      "category": { "label": "Sales Jobs" },
+      "description": "Drive field sales in the Pune region."
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "0-legal-notice": "Remotive API sample (trimmed) for offline tests.",
+  "jobs": [
+    {
+      "id": 1900001,
+      "url": "https://remotive.com/remote-jobs/product/associate-product-manager-1900001",
+      "title": "Associate Product Manager",
+      "company_name": "Nimbus Labs",
+      "candidate_required_location": "Worldwide",
+      "salary": "$60,000 - $80,000",
+      "publication_date": "2026-07-15T09:00:00",
+      "job_type": "full_time",
+      "tags": ["product", "saas", "b2b"],
+      "description": "<p>Own the roadmap for our onboarding surface. 2-3 years experience preferred.</p>"
+    },
+    {
+      "id": 1900002,
+      "url": "https://remotive.com/remote-jobs/data/business-analyst-1900002",
+      "title": "Business Analyst (SAP)",
+      "company_name": "Ledgerworks",
+      "candidate_required_location": "India",
+      "salary": "",
+      "publication_date": "2026-07-16T11:30:00",
+      "job_type": "full_time",
+      "tags": ["sap", "finance", "analysis"],
+      "description": "<p>Gather requirements across finance modules, write functional specs.</p>"
+    },
+    {
+      "id": 1900003,
+      "url": "https://remotive.com/remote-jobs/product/senior-product-manager-1900003",
+      "title": "Senior Product Manager",
+      "company_name": "Peak Systems",
+      "candidate_required_location": "USA Only",
+      "salary": "$150,000 - $180,000",
+      "publication_date": "2026-07-14T08:00:00",
+      "job_type": "full_time",
+      "tags": ["product", "leadership"],
+      "description": "<p>Lead a pod of 6. 8+ years product experience required.</p>"
+    }
+  ]
+}
