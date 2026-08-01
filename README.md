@@ -65,6 +65,22 @@ python -m src.notify    # push top matches to Telegram
 - `config.local.yaml` — your real secrets. **Gitignored, never committed.** Overrides the placeholders in `config.yaml` at runtime.
 - `config.example.yaml` — template to copy into `config.local.yaml`.
 
+### Deploying on a server
+
+Instead of shipping `config.local.yaml`, set the secrets as environment
+variables — they take precedence over both YAML files:
+
+| Env var | Overrides |
+|---|---|
+| `ADZUNA_APP_ID`    | `sources.adzuna.app_id`  |
+| `ADZUNA_APP_KEY`   | `sources.adzuna.app_key` |
+| `TELEGRAM_TOKEN`   | `telegram.token`         |
+| `TELEGRAM_CHAT_ID` | `telegram.chat_id`       |
+
+Resolution order per secret: **environment variable → `config.local.yaml` →
+`config.yaml` placeholder** — same code runs locally (YAML) and on a server
+(env vars) with no changes.
+
 ## Usage
 
 | Command | What it does |

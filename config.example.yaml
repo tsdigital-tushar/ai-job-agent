@@ -12,3 +12,7 @@ sources:
 telegram:
   token: "YOUR_TELEGRAM_BOT_TOKEN"    # from @BotFather
   chat_id: "YOUR_TELEGRAM_CHAT_ID"    # find via: python -m src.notify --whoami
+
+# Server deploys: instead of this file you can set these as environment
+# variables (they take precedence over the YAML):
+#   ADZUNA_APP_ID, ADZUNA_APP_KEY, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID

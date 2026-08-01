@@ -14,6 +14,15 @@ _DEFAULT_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config.yaml"
 )
 
+# Secret env vars → where they live in the config dict. Set on a server (or in
+# a systemd unit / container env) to avoid shipping config.local.yaml there.
+_ENV_OVERRIDES = {
+    "ADZUNA_APP_ID":    ("sources", "adzuna", "app_id"),
+    "ADZUNA_APP_KEY":   ("sources", "adzuna", "app_key"),
+    "TELEGRAM_TOKEN":   ("telegram", "token"),
+    "TELEGRAM_CHAT_ID": ("telegram", "chat_id"),
+}
+
 
 def _deep_merge(base: dict, override: dict) -> dict:
     """Recursively merge `override` into `base` (in place). Nested dicts merge
@@ -27,6 +36,24 @@ def _deep_merge(base: dict, override: dict) -> dict:
     return base
 
 
+def _apply_env_overrides(cfg: dict) -> None:
+    """Overlay secret environment variables on top of the loaded config (in
+    place). Only a var with a non-empty value overrides — an unset or blank
+    env var leaves the config.local.yaml / config.yaml value untouched."""
+    for env_name, path in _ENV_OVERRIDES.items():
+        val = os.environ.get(env_name)
+        if not val:
+            continue
+        node = cfg
+        for key in path[:-1]:
+            child = node.get(key)
+            if not isinstance(child, dict):
+                child = {}
+                node[key] = child
+            node = child
+        node[path[-1]] = val
+
+
 def load_config(path: str | None = None) -> dict:
     path = path or _DEFAULT_PATH
     with open(path, "r", encoding="utf-8") as fh:
@@ -38,6 +65,8 @@ def load_config(path: str | None = None) -> dict:
         with open(local_path, "r", encoding="utf-8") as fh:
             local = yaml.safe_load(fh) or {}
         _deep_merge(cfg, local)
+    # Highest precedence: secrets from the environment (for server deploys).
+    _apply_env_overrides(cfg)
     return cfg
 
 

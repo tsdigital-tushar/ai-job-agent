@@ -1,0 +1,65 @@
+# Daily agent run in the cloud (GitHub-hosted runner).
+#
+# KNOWN LIMITATIONS (to address next — the runner is EPHEMERAL, fresh checkout
+# every run, nothing persists between runs):
+#
+#   1. No persistent data/jobs.db. Dedup/history resets each run, so across
+#      cloud runs the agent can't yet remember what it already saw or pushed.
+#      Fix later: commit the DB back, use actions/cache or an artifact, or an
+#      external store.
+#
+#   2. Résumé profile: the résumé PDF and data/profile.json are gitignored, so
+#      the runner has no profile by default. Resolved below by restoring the
+#      résumé from the RESUME_PDF_B64 secret before the run, so `src.run`
+#      rebuilds data/profile.json in the cloud on each run. (The rebuilt
+#      profile isn't persisted, but it's cheap to regenerate from the PDF.)
+#
+# Note: scheduled workflows run only on the default branch and GitHub may delay
+# a run under load — treat the cron times as approximate.
+
+name: daily-agent
+
+on:
+  schedule:
+    # cron is UTC; IST = UTC+5:30.
+    - cron: "30 3 * * *"    # 09:00 IST
+    - cron: "30 6 * * *"    # 12:00 IST
+    - cron: "30 13 * * *"   # 19:00 IST
+  workflow_dispatch:         # allow manual runs from the Actions tab
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Restore résumé from secret
+        env:
+          RESUME_PDF_B64: ${{ secrets.RESUME_PDF_B64 }}
+        run: |
+          if [ -z "$RESUME_PDF_B64" ]; then
+            echo "RESUME_PDF_B64 not set — skipping résumé restore; scoring will be limited."
+            exit 0
+          fi
+          echo "$RESUME_PDF_B64" | base64 --decode > TusharSingh_Resume.pdf
+          echo "résumé restored ($(wc -c < TusharSingh_Resume.pdf) bytes)"
+
+      - name: Run daily pipeline
+        env:
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -m src.daily
